@@ -25,86 +25,38 @@ class MyAppState extends State<MyApp> {
   String _newValue = "Kelvin";
   double _result = 0;
   List<String> listViewItem = List<String>();
+  //method untuk menghitung suhu
   void perhitunganSuhu() {
     setState(() {
       _inputUser = double.parse(inputController.text);
       if (_newValue == "Celcius") {
-        _celcius=_inputUser;
+        _celcius = _inputUser;
         _kelvin = _inputUser + 273.15;
-        _reamur =  (4 / 5) *_inputUser ;
-        _fahrenheit =  (9 / 5) *_inputUser + 32;
-        listViewItem.add("$_newValue : $_result");
-      } else if (_newValue == "Reamur") {
-        _reamur=_inputUser;
-        _celcius = _inputUser * (5/4);
-        _fahrenheit = ( 9 / 4) * _inputUser + 32;
-        _kelvin = ( 5 / 4) * _inputUser + 273;
-        listViewItem.add("$_newValue : $_result");
+        _reamur = (4 / 5) * _inputUser;
+        _fahrenheit = (9 / 5) * _inputUser + 32;
+        listViewItem.add("$_newValue : $_celcius");
+       } else if (_newValue == "Reamur") {
+        _reamur = _inputUser;
+        _celcius = _inputUser * (5 / 4);
+        _fahrenheit = (9 / 4) * _inputUser + 32;
+        _kelvin = (5 / 4) * _inputUser + 273;
+        listViewItem.add("$_newValue : $_reamur");
       } else if (_newValue == "Kelvin") {
         _celcius = _inputUser - 273;
         _reamur = (_inputUser - 273) * 4 / 5;
-        _kelvin=_inputUser;
+        _kelvin = _inputUser;
         _fahrenheit = (_inputUser - 273) * 9 / 5 + 32;
-        listViewItem.add("$_newValue : $_result");
+        listViewItem.add("$_newValue : $_kelvin");
       } else {
-        _celcius = (_inputUser -32) * 5/9;
-        _reamur = 4/9 * (_inputUser -32);
-        _kelvin = (_inputUser + 469.67) * 5/9;
+        _celcius = (_inputUser - 32) * 5 / 9;
+        _reamur = 4 / 9 * (_inputUser - 32);
+        _kelvin = (_inputUser + 469.67) * 5 / 9;
         _fahrenheit = _inputUser;
-        listViewItem.add("$_newValue : $_result");
+        listViewItem.add("$_newValue : $_fahrenheit");
       }
     });
   }
 
-  void perhitunganReamur() {
-    setState(() {
-      _inputUser = double.parse(inputController.text);
-      if (_newValue == "Kelvin") {
-        _result = (5 / 4) * _inputUser + 273;
-        listViewItem.add("$_newValue : $_result");
-      } else if (_newValue == "Celcius") {
-        _result = (5 / 4) * _inputUser;
-        listViewItem.add("$_newValue : $_result");
-      } else {
-        _result = (9 / 4) * _inputUser + 32;
-        listViewItem.add("$_newValue : $_result");
-      }
-    });
-  }
-
-  // void perhitunganKelvin() {
-  //   setState(() {
-  //     _inputUser = double.parse(inputController.text);
-  //     if (_newValue == "Celcius") {
-  //       _result = _inputUser - 273;
-  //       listViewItem.add("$_newValue : $_result");
-  //     } else if (_newValue == "Reamur") {
-  //       _result = 4 / 5 * (_inputUser - 273);
-  //       listViewItem.add("$_newValue : $_result");
-  //     } else {
-  //       _result = 9 / 5 * (_inputUser - 273) + 32;
-  //       listViewItem.add("$_newValue : $_result");
-  //     }
-  //   });
-  // }
-
-  // void perhitunganFahrenheit() {
-  //   setState(() {
-  //     _inputUser = double.parse(inputController.text);
-  //     if (_newValue == "Celcius") {
-  //       _result = 5 / 9 * (_inputUser - 32);
-  //       listViewItem.add("$_newValue : $_result");
-  //     } else if (_newValue == "Reamur") {
-  //       _result = 4 / 9 * (_inputUser - 32);
-  //       listViewItem.add("$_newValue : $_result");
-  //     } else {
-  //       _result = 5 / 9 * (_inputUser - 32) + 273;
-  //       listViewItem.add("$_newValue : $_result");
-  //     }
-  //   });
-  // }
-
-  var listItem1 = ["Celcius", "Kelvin", "Reamur", "Fahrenheit"];
   var listItem = ["Celcius", "Kelvin", "Reamur", "Fahrenheit"];
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -120,11 +72,13 @@ class MyAppState extends State<MyApp> {
           margin: EdgeInsets.all(8),
           child: Column(
             children: [
+              //untuk menginputkan suhu menggunakan textformfield
               Input(inputController: inputController),
               Column(
                 children: [
+                  //untuk menampilkan beberapa menu suhu yang akan di konversi
                   DropdownButton<String>(
-                    items: listItem1.map((String value) {
+                    items: listItem.map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
@@ -134,16 +88,13 @@ class MyAppState extends State<MyApp> {
                     onChanged: (String changeValue) {
                       setState(() {
                         _newValue = changeValue;
-                        // perhitunganCelcius();
-                        // perhitunganKelvin();
-                        // perhitunganReamur();
-                        // perhitunganFahrenheit();
+                        perhitunganSuhu();
                       });
                     },
                   ),
                 ],
               ),
-              Result(result: _result),
+              // Result(result: _result),
               Convert(convertHandler: perhitunganSuhu),
               Expanded(
                 child: Row(
@@ -153,6 +104,12 @@ class MyAppState extends State<MyApp> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
+                          // decoration: BoxDecoration(
+                          //   border: Border.all(
+                          //     color : Colors.white,
+                          //     width :8,
+                          //   )
+                          // ),
                           child: Text(
                             'Celcius : ',
                             textAlign: TextAlign.center,

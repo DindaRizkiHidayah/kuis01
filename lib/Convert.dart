@@ -10,11 +10,11 @@ final Function convertHandler;
     return Container(
       width: double.infinity,
       child:RaisedButton(
-        hoverColor: Colors.red,
+        hoverColor: Colors.grey[400],
       onPressed: convertHandler,
-      textColor: Colors.white,
-      color: Colors.grey,
-      child: Text("Konversi Suhu", style: TextStyle(fontSize: 15)
+      textColor: Colors.black,
+      color: Colors.grey[200],
+      child: Text("Konversi Suhu", style: TextStyle(fontSize: 15),
       ),
       ),
     );
