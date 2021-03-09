@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'Convert.dart';
+import 'Hasil.dart';
 import 'Input.dart';
 import 'Result.dart';
 import 'Riwayat.dart';
@@ -22,7 +23,7 @@ class MyAppState extends State<MyApp> {
   double _celcius = 0;
   double _fahrenheit = 0;
   final inputController = TextEditingController();
-  String _newValue = "Kelvin";
+  String _newValue = "Celcius";
   double _result = 0;
   List<String> listViewItem = List<String>();
   //method untuk menghitung suhu
@@ -35,7 +36,7 @@ class MyAppState extends State<MyApp> {
         _reamur = (4 / 5) * _inputUser;
         _fahrenheit = (9 / 5) * _inputUser + 32;
         listViewItem.add("$_newValue : $_celcius");
-       } else if (_newValue == "Reamur") {
+      } else if (_newValue == "Reamur") {
         _reamur = _inputUser;
         _celcius = _inputUser * (5 / 4);
         _fahrenheit = (9 / 4) * _inputUser + 32;
@@ -60,15 +61,18 @@ class MyAppState extends State<MyApp> {
   var listItem = ["Celcius", "Kelvin", "Reamur", "Fahrenheit"];
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Konversi Suhu',
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Konverter Suhu"),
+          title: Center(child: Text("Konverter Suhu")),
         ),
         body: Container(
+          // decoration: BoxDecoration(
+          //   color: Colors.lightBlue
+          // ),
           margin: EdgeInsets.all(8),
           child: Column(
             children: [
@@ -95,78 +99,15 @@ class MyAppState extends State<MyApp> {
                 ],
               ),
               // Result(result: _result),
+
+              //button konversi suhu
               Convert(convertHandler: perhitunganSuhu),
+
+              //tampilan hasil konversi
               Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          // decoration: BoxDecoration(
-                          //   border: Border.all(
-                          //     color : Colors.white,
-                          //     width :8,
-                          //   )
-                          // ),
-                          child: Text(
-                            'Celcius : ',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            'Kelvin : ',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            'Reamur : ',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            'Fahrenheit : ',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          child: Text(
-                            '$_celcius',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            '$_kelvin',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            '$_reamur',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Container(
-                          child: Text(
-                            '$_fahrenheit',
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                child: Hasil(celcius: _celcius, kelvin: _kelvin, reamur: _reamur, fahrenheit: _fahrenheit),
               ),
+              //text riwayat konversi
               Container(
                 margin: EdgeInsets.only(top: 10, bottom: 10),
                 child: Text(
@@ -174,6 +115,7 @@ class MyAppState extends State<MyApp> {
                   style: TextStyle(fontSize: 20),
                 ),
               ),
+              //menampilkan list riwayat dari inputan suhu
               Expanded(
                 child: Riwayat(listViewItem: listViewItem),
               ),
