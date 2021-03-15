@@ -1,5 +1,9 @@
 # kuis01
 
+Output
+
+![kuis1](https://user-images.githubusercontent.com/70737564/111089542-f6dc8800-855e-11eb-8642-0fba78136da3.jpeg)
+
 A new Flutter project.
 
 ## Getting Started
